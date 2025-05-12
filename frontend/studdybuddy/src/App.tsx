@@ -6,8 +6,20 @@ import Home from './pages/Home'
 import Quizzes from './pages/Quizzes'
 import Upload from './pages/Upload'
 import { Routes, Route } from 'react-router-dom'
+import favicon from './assets/studdybuddy.png'
+
+function setFavicon(url: string) {
+  let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.head.appendChild(link);
+  }
+  link.href = url;
+}
 
 function App() {
+  setFavicon(favicon);
   return (
     <>
     <title>StuddyBuddy</title>
