@@ -1,0 +1,27 @@
+h1 {
+    font-size: 5rem;
+    top: 10px;
+}
+
+.input-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.input-group button {
+    background-color: #4aa3df;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-group button:hover {
+    background-color: #161b33;
+}
