@@ -1,0 +1,36 @@
+.container {
+    background-color: #e4e4e4;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 200%;
+    height: 200%;
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+.info-container ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+    list-style-type: none;
+    align-items: center;
+}
+
+.card-container {
+    background-color: #4aa3df;
+    color: white;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}

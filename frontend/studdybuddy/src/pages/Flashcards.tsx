@@ -15,41 +15,41 @@ export default function Flashcards() {
                 <div className="input-group">
                     <button onClick={() => setVisibleMath(!visibleMath)}>Math</button>
                     <ul className={visibleMath ? 'visible' : ""}>
-                        <li>Algebra</li>
-                        <li>Geometry</li>
-                        <li>Calculus</li>
+                        <li><button>Algebra</button></li>
+                        <li><button>Geometry</button></li>
+                        <li><button>Calculus</button></li>
                     </ul>
                 </div>
                 <div className="input-group">
                     <button onClick={() => setVisibleScience(!visibleScience)}>Science</button>
                     <ul className={visibleScience ? 'visible' : ""}>
-                        <li>Physics</li>
-                        <li>Chemistry</li>
-                        <li>Biology</li>
+                        <li><button>Physics</button></li>
+                        <li><button>Chemistry</button></li>
+                        <li><button>Biology</button></li>
                     </ul>
                 </div>
                 <div className="input-group">
                     <button onClick={() => setVisibleHistory(!visibleHistory)}>History</button>
                     <ul className={visibleHistory ? 'visible' : ""}>
-                        <li>World History</li>
-                        <li>US History</li>
-                        <li>European History</li>
+                        <li><button>World History</button></li>
+                        <li><button>US History</button></li>
+                        <li><button>European History</button></li>
                     </ul>
                 </div>
                 <div className="input-group">
                     <button onClick={() => setVisibleEnglish(!visibleEnglish)}>English</button>
                     <ul className={visibleEnglish ? 'visible' : ""}>
-                        <li>Literature</li>
-                        <li>Grammar</li>
-                        <li>Writing</li>
+                        <li><button>Literature</button></li>
+                        <li><button>Grammar</button></li>
+                        <li><button>Writing</button></li>
                     </ul>
                 </div>
                 <div className="input-group">
                     <button onClick={() => setVisibleCoding(!visibleCoding)}>Coding</button>
                     <ul className={visibleCoding ? 'visible' : ""}>
-                        <li>Python</li>
-                        <li>SQL</li>
-                        <li>Java</li>
+                        <li><button>Python</button></li>
+                        <li><button>SQL</button></li>
+                        <li><button>Java</button></li>
                     </ul>
                 </div>
             </div>
