@@ -22,6 +22,17 @@ h1 {
     justify-content: center;
 }
 
+.input-group ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    visibility: hidden;
+}
+
+.input-group ul.visible {
+    visibility: visible;
+}
+
 .input-group button:hover {
     background-color: #161b33;
 }
