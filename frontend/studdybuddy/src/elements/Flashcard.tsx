@@ -2,7 +2,7 @@ import './Flashcard.css';
 
 export default function Flashcard() {
     return (
-        <div className="container">
+        <div className="content-container">
             <div className="info-container">
                 <h3>Topic</h3>
                 <ul>

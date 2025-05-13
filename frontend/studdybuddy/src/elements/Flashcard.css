@@ -1,4 +1,4 @@
-.container {
+.content-container {
     background-color: #e4e4e4;
     border-radius: 1rem;
     padding: 1rem;
@@ -6,7 +6,8 @@
     flex-direction: column;
     align-items: stretch;
     width: 200%;
-    height: 200%;
+    min-height: 400px;
+    
 }
 
 .info-container {
@@ -33,4 +34,18 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    min-height: 300px;
+}
+
+.card-container:hover {
+    cursor: pointer;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 0 1rem;
+    margin-top: 1rem;
 }
