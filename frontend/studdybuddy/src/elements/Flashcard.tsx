@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Flashcard.css';
 
 export default function Flashcard() {
-    const [flipped, setFlipped] = useState(true);
+    const [isQuestionSide, setIsQuestionSide] = useState(true);
 
     return (
         <div className="content-container">
@@ -13,11 +13,11 @@ export default function Flashcard() {
                     <li><button>Star</button></li>
                 </ul>
             </div>
-            <div className="card-container" onClick={() => setFlipped(!flipped)}>
+            <div className="card-container" onClick={() => setIsQuestionSide(!isQuestionSide)}>
                 {/* Front of card */}
-                <div className={flipped ? "front" : "back"}>
-                    <p className="question-text">This is the question</p>
-                    <p className="answer-text">This is the answer</p>
+                <div className={isQuestionSide ? "front" : "back"}>
+                    <p className={isQuestionSide ? "show" : ""}>This is the,dsfnsdfs,dmf ,mdsfn ,msd n,mds sdfdsfdsfdsffdsfndsf sdf  sdf ds fdf fsdf dsfdsfdsffsfdsfdsquestion</p>
+                    <p className={isQuestionSide ? "" : "show"}>This is the answer</p>
                 </div>
             </div>
             <div className="button-container">
