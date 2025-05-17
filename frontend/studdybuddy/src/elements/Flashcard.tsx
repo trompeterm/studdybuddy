@@ -19,10 +19,14 @@ export default function Flashcard({ topic, onClose }: FlashcardProps) {
                     <li><Star>Star</Star></li>
                 </ul>
             </div>
-            <div className="card-container" onClick={() => setIsQuestionSide(!isQuestionSide)}>
-                <div className={isQuestionSide ? "front" : "back"}>
-                    <p className={isQuestionSide ? "show" : ""}>This is the question</p>
-                    <p className={isQuestionSide ? "" : "show"}>This is the answer</p>
+            <div className={`card-container ${!isQuestionSide ? 'flipped' : ''}`} onClick={() => setIsQuestionSide(!isQuestionSide)}>
+                <div className="flipper">
+                    <div className="front">
+                        <p className="show">This is the question</p>
+                    </div>
+                    <div className="back">
+                        <p className="show">This is the answer</p>
+                    </div>
                 </div>
             </div>
             <div className="button-container">
