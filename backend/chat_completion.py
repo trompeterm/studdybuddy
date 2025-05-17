@@ -4,14 +4,40 @@ import os
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+class ChatCompletion:
+    def __init__(self):
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-response =client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "What is the capital of the moon? Be as creative as possible."}
-    ]
-)
+    def generate(self, message: str) -> str:
+        response = self.client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": 
+                
+                """
+                You are a professional tutor that creates flashcards and quizzes for users. 
+                You will be given a topic and you will generate a flashcard or a quiz for the user.
+                
+                If asked for a flashcard, you will generate a flashcard with this JSON structure:
+                
+                {
+                    "question": "string",
+                    "answer": "string"
+                }
+                
+                If asked for a quiz, you will generate a quiz question with this JSON structure:
+                
+                {
+                    "question": "string",
+                    "options": ["string", "string", "string", "string"],
+                    "answer": "string"
+                }
+                
+                """
+                },
 
-print(response.choices[0].message.content)
+                {"role": "user", "content": message}
+            ],
+            response_format={"type": "json_object"}
+        )
+        return response.choices[0].message.content
