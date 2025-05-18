@@ -4,10 +4,12 @@ import './Flashcard.css';
 
 interface FlashcardProps {
     topic: string;
+    question: string;
+    answer: string;
     onClose: () => void;
 }
 
-export default function Flashcard({ topic, onClose }: FlashcardProps) {
+export default function Flashcard({ topic, question, answer, onClose }: FlashcardProps) {
     const [isQuestionSide, setIsQuestionSide] = useState(true);
 
     return (
@@ -20,13 +22,11 @@ export default function Flashcard({ topic, onClose }: FlashcardProps) {
                 </ul>
             </div>
             <div className={`card-container ${!isQuestionSide ? 'flipped' : ''}`} onClick={() => setIsQuestionSide(!isQuestionSide)}>
-                <div className="flipper">
-                    <div className="front">
-                        <p className="show">This is the question</p>
-                    </div>
-                    <div className="back">
-                        <p className="show">This is the answer</p>
-                    </div>
+                <div className="front">
+                    <p className="show">{question}</p>
+                </div>
+                <div className="back">
+                    <p className="show">{answer}</p>
                 </div>
             </div>
             <div className="button-container">

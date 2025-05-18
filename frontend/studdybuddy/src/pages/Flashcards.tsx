@@ -10,16 +10,28 @@ export default function Flashcards() {
     const [visibleCoding, setVisibleCoding] = useState(false);
     const [showFlashcard, setShowFlashcard] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState('');
+    const [question, setQuestion] = useState('Loading...');
+    const [answer, setAnswer] = useState('Loading...');
 
-    const handleTopicClick = (topic: string) => {
+
+    const handleTopicClick = async (topic: string) => {
         setSelectedTopic(topic);
+        await loadFlashcard(topic);
         setShowFlashcard(true);
     };
+
+    const loadFlashcard = async (topic: string) => {
+        const response = await fetch(`http://127.0.0.1:8000/generate-flashcard?topic=${encodeURIComponent(topic)}`);
+        const jsonString = await response.json();
+        const data = JSON.parse(jsonString);
+        setQuestion(data.question);
+        setAnswer(data.answer);
+    }
 
     return (
         <div className="container">
             {showFlashcard ? (
-                <Flashcard topic={selectedTopic} onClose={() => setShowFlashcard(false)} />
+                <Flashcard topic={selectedTopic} question={question} answer={answer} onClose={() => setShowFlashcard(false)} />
             ) : (
                 <>
                     <h1 className="main-label">I want to studdy...</h1>
