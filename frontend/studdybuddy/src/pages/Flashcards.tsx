@@ -10,8 +10,8 @@ export default function Flashcards() {
     const [visibleCoding, setVisibleCoding] = useState(false);
     const [showFlashcard, setShowFlashcard] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState('');
-    const [question, setQuestion] = useState('Loading...');
-    const [answer, setAnswer] = useState('Loading...');
+    const [question, setQuestion] = useState('');
+    const [answer, setAnswer] = useState('');
 
 
     const handleTopicClick = async (topic: string) => {
