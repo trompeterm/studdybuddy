@@ -15,3 +15,9 @@ async def generate_flashcard(topic: str):
     llm = ChatCompletion()
     flashcard = llm.generate_flashcard(topic)
     return flashcard
+
+@app.get("/generate-quiz")
+async def generate_quiz(topic: str):
+    llm = ChatCompletion()
+    quiz = llm.generate_quiz(topic)
+    return quiz

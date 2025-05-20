@@ -48,10 +48,6 @@
     min-height: 3rem;
 }
 
-.question-container ul li button:hover {
-    background-color: #3385c6;
-}
-
 .quiz-controls {
     display: flex;
     justify-content: space-between;
@@ -76,4 +72,16 @@
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     max-height: 2rem;
+}
+
+.quiz-container button.correct {
+    background-color: #4CAF50;
+    color: white;
+    border: 2px solid #45a049;
+}
+
+.quiz-container button.incorrect {
+    background-color: #f44336;
+    color: white;
+    border: 2px solid #da190b;
 }
