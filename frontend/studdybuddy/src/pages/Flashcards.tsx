@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './Flashcards.css';
 import Flashcard from '../elements/Flashcard';
+import LoadingSpinner from '../elements/LoadingSpinner';
 
 export default function Flashcards() {
     const [visibleMath, setVisibleMath] = useState(false);
@@ -9,14 +10,16 @@ export default function Flashcards() {
     const [visibleEnglish, setVisibleEnglish] = useState(false);
     const [visibleCoding, setVisibleCoding] = useState(false);
     const [showFlashcard, setShowFlashcard] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState('');
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
 
-
     const handleTopicClick = async (topic: string) => {
         setSelectedTopic(topic);
+        setIsLoading(true);
         await loadFlashcard(topic);
+        setIsLoading(false);
         setShowFlashcard(true);
     };
 
@@ -32,6 +35,8 @@ export default function Flashcards() {
         <div className="container">
             {showFlashcard ? (
                 <Flashcard topic={selectedTopic} question={question} answer={answer} onClose={() => setShowFlashcard(false)} />
+            ) : isLoading ? (
+                <LoadingSpinner />
             ) : (
                 <>
                     <h1 className="main-label">I want to studdy...</h1>

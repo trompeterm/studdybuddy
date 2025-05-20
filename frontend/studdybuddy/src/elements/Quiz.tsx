@@ -9,9 +9,10 @@ interface QuizProps {
     answer3: string;
     answer4: string;
     correctAnswer: number;
+    onClose: () => void;
 }
 
-export default function Quiz( { topic, question, answer1, answer2, answer3, answer4, correctAnswer }: QuizProps) {
+export default function Quiz( { topic, question, answer1, answer2, answer3, answer4, correctAnswer, onClose }: QuizProps) {
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
 
     const handleAnswerClick = (answerIndex: number) => {
@@ -53,7 +54,7 @@ export default function Quiz( { topic, question, answer1, answer2, answer3, answ
                 </ul>
             </div>
             <div className="quiz-controls">
-                <button>Close</button>
+                <button onClick={onClose}>Close</button>
                 <ul>
                     <button>Previous</button>
                     <button>Next</button>
