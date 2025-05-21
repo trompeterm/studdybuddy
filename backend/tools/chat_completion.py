@@ -25,6 +25,7 @@ class ChatCompletion:
                     "answer": "string"
                 }
                 
+                Please avoid creating flashcards that simply define the topic.
                 """
                 },
 
