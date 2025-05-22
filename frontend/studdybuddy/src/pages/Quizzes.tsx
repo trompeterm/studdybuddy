@@ -12,6 +12,7 @@ export default function Quizzes() {
     const [showQuiz, setShowQuiz] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState('');
+    const [currentQuestion, setCurrentQuestion] = useState(1);
     const [quizData, setQuizData] = useState({
         topic: '',
         question: '',
@@ -28,6 +29,7 @@ export default function Quizzes() {
         await loadQuiz(topic);
         setIsLoading(false);
         setShowQuiz(true);
+        setCurrentQuestion(1);
     };
 
     const loadQuiz = async (topic: string) => {
@@ -45,6 +47,13 @@ export default function Quizzes() {
         });
     }
 
+    const handleNext = async () => {
+        setIsLoading(true);
+        await loadQuiz(selectedTopic);
+        setIsLoading(false);
+        setCurrentQuestion(prev => prev + 1);
+    };
+
     return (
         <div className="container">
             {showQuiz ? (
@@ -57,6 +66,9 @@ export default function Quizzes() {
                     answer4={quizData.answer4}
                     correctAnswer={quizData.correctAnswer}
                     onClose={() => setShowQuiz(false)}
+                    onNext={handleNext}
+                    questionNumber={currentQuestion}
+                    totalQuestions={10}
                 />
             ) : isLoading ? (
                 <LoadingSpinner />

@@ -10,13 +10,33 @@ interface QuizProps {
     answer4: string;
     correctAnswer: number;
     onClose: () => void;
+    onNext: () => void;
+    questionNumber: number;
+    totalQuestions: number;
 }
 
-export default function Quiz( { topic, question, answer1, answer2, answer3, answer4, correctAnswer, onClose }: QuizProps) {
+export default function Quiz( { 
+    topic, 
+    question, 
+    answer1, 
+    answer2, 
+    answer3, 
+    answer4, 
+    correctAnswer, 
+    onClose, 
+    onNext,
+    questionNumber,
+    totalQuestions 
+}: QuizProps) {
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
 
     const handleAnswerClick = (answerIndex: number) => {
         setSelectedAnswer(answerIndex);
+    };
+
+    const handleNext = () => {
+        setSelectedAnswer(null);
+        onNext();
     };
 
     const getAnswerClass = (answerIndex: number) => {
@@ -30,7 +50,7 @@ export default function Quiz( { topic, question, answer1, answer2, answer3, answ
         <div className="quiz-container">
             <div className="quiz-info">
                 <h3>{topic}</h3>
-                <p>Question #/#</p>
+                <p>Question {questionNumber}/{totalQuestions}</p>
             </div>
             <div className="question-container">
                 <p>{question}</p>
@@ -57,7 +77,7 @@ export default function Quiz( { topic, question, answer1, answer2, answer3, answ
                 <button onClick={onClose}>Close</button>
                 <ul>
                     <button>Previous</button>
-                    <button>Next</button>
+                    <button onClick={handleNext}>Next</button>
                 </ul>
             </div>
         </div>
