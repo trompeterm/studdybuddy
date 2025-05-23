@@ -8,5 +8,6 @@ dependencies = [
     "dotenv>=0.9.9",
     "fastapi[standard]>=0.115.12",
     "openai>=1.79.0",
+    "pyautogen>=0.9",
     "uvicorn>=0.34.2",
 ]
