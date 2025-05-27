@@ -12,13 +12,15 @@ class StudyGroupChat:
         self.quiz_generator = QuizGenerator()
         self.refiner = Refiner()
         
+        self.agents = [
+            self.task_manager.get_agent(),
+            self.flashcard_generator.get_agent(),
+            self.quiz_generator.get_agent(),
+            self.refiner.get_agent()
+        ]
+
         self.group_chat = GroupChat(
-            agents=[
-                self.task_manager.get_agent(),
-                self.flashcard_generator.get_agent(),
-                self.quiz_generator.get_agent(),
-                self.refiner.get_agent()
-            ],
+            agents=self.agents,
             messages=[
                 {
                     "role": "user",
@@ -44,4 +46,15 @@ class StudyGroupChat:
                 "content": user_message
             }]
         )
-        return chat_result
+
+        # Extract the chat history from the group chat
+        chat_history = []
+        for message in self.group_chat.messages:
+            if isinstance(message, dict):  # Ensure message is a dictionary
+                chat_history.append({
+                    "role": message.get("role", "assistant"),
+                    "content": message.get("content", ""),
+                    "name": message.get("name", "Unknown")
+                })
+        
+        return chat_history
