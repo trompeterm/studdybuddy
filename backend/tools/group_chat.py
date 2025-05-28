@@ -1,4 +1,4 @@
-from autogen import GroupChat, GroupChatManager
+from autogen import GroupChat, GroupChatManager, UserProxyAgent
 from agents.task_manager import TaskManager
 from agents.flashcard_generator import FlashcardGenerator
 from agents.quiz_generator import QuizGenerator
@@ -21,13 +21,8 @@ class StudyGroupChat:
 
         self.group_chat = GroupChat(
             agents=self.agents,
-            messages=[
-                {
-                    "role": "user",
-                    "content": "Please generate flashcard content (question and answer) or a quiz question (question, 3 incorrect answers, and the correct answer) for the user."
-                }
-            ],
-            max_round=10
+            messages=[],
+            max_round=8
         )
 
         self.manager = GroupChatManager(
@@ -40,12 +35,12 @@ class StudyGroupChat:
         )
     
     def initiate_chat(self, user_message: str):
-        chat_result = self.manager.run(
-            messages=[{
-                "role": "user",
-                "content": user_message
-            }]
-        )
+        self.group_chat.messages.append({
+            "role": "user",
+            "content": user_message
+        })
+
+        self.manager.run()
 
         # Extract the chat history from the group chat
         chat_history = []
@@ -58,3 +53,18 @@ class StudyGroupChat:
                 })
         
         return chat_history
+
+    def test(self):
+        proxy = UserProxyAgent(
+            name="User"
+        )
+
+        agent = self.flashcard_generator.get_agent()
+
+        proxy.initiate_chat(
+            agent,
+            message="Please generate me a flashcard about Python, the coding language."
+        )
+
+        msg = agent.last_message()["content"]
+        return msg
