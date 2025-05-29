@@ -11,12 +11,16 @@ class StudyGroupChat:
         self.flashcard_generator = FlashcardGenerator()
         self.quiz_generator = QuizGenerator()
         self.refiner = Refiner()
+        self.user_proxy = UserProxyAgent(
+            name="User"
+        )
         
         self.agents = [
             self.task_manager.get_agent(),
             self.flashcard_generator.get_agent(),
             self.quiz_generator.get_agent(),
-            self.refiner.get_agent()
+            self.refiner.get_agent(),
+            self.user_proxy
         ]
 
         self.group_chat = GroupChat(
