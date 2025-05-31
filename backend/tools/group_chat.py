@@ -39,12 +39,11 @@ class StudyGroupChat:
         )
     
     def initiate_chat(self, user_message: str):
-        self.group_chat.messages.append({
-            "role": "user",
-            "content": user_message
-        })
 
-        self.manager.run()
+        self.user_proxy.initiate_chat(
+            self.manager,
+            message=user_message
+        )
 
         # Extract the chat history from the group chat
         chat_history = []
