@@ -8,28 +8,25 @@ class ChatCompletion:
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-    def generate_flashcard(self, topic: str) -> str:
+    def generate_flashcard(self, content: str) -> str:
         response = self.client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": 
                 
                 """
-                You are a professional tutor that creates flashcards for users. 
-                You will be given a topic and you will generate a flashcard for the user.
+                You have been given group chat message data and you must generate a JSON object that represents a flashcard. 
                 
-                If asked for a flashcard, you will generate a flashcard with this JSON structure:
+                This is the JSON structure for the flashcard:
                 
                 {
                     "question": "string",
                     "answer": "string"
                 }
-                
-                Please avoid creating flashcards that simply define the topic.
                 """
                 },
 
-                {"role": "user", "content": f"""Please generate me a flashcard about {topic}"""}
+                {"role": "user", "content": f"""Please generate a flashcard JSON given this group chat data: {content}"""}
             ],
             response_format={"type": "json_object"}
         )

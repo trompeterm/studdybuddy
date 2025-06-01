@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from tools.chat_completion import ChatCompletion
+from tools.group_chat import StudyGroupChat
+
 app = FastAPI()
+group_chat = StudyGroupChat()
+chat_completion = ChatCompletion()
 
 app.add_middleware(
     CORSMiddleware, 
@@ -12,8 +16,8 @@ app.add_middleware(
 
 @app.get("/generate-flashcard")
 async def generate_flashcard(topic: str):
-    llm = ChatCompletion()
-    flashcard = llm.generate_flashcard(topic)
+    flashcard_data = group_chat.initiate_chat(topic)
+    flashcard = chat_completion.generate_flashcard(flashcard_data)
     return flashcard
 
 @app.get("/generate-quiz")
