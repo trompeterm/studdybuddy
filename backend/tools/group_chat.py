@@ -12,7 +12,8 @@ class StudyGroupChat:
         self.quiz_generator = QuizGenerator()
         self.refiner = Refiner()
         self.user_proxy = UserProxyAgent(
-            name="User"
+            name="User",
+            human_input_mode="NEVER"
         )
         
         self.agents = [
@@ -56,18 +57,3 @@ class StudyGroupChat:
                 })
         
         return chat_history
-
-    def test(self):
-        proxy = UserProxyAgent(
-            name="User"
-        )
-
-        agent = self.flashcard_generator.get_agent()
-
-        proxy.initiate_chat(
-            agent,
-            message="Please generate me a flashcard about Python, the coding language."
-        )
-
-        msg = agent.last_message()["content"]
-        return msg
