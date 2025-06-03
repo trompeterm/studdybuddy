@@ -22,6 +22,6 @@ async def generate_flashcard(topic: str):
 
 @app.get("/generate-quiz")
 async def generate_quiz(topic: str):
-    llm = ChatCompletion()
-    quiz = llm.generate_quiz(topic)
+    quiz_data = group_chat.initiate_chat("Please generate a quiz about " + topic)
+    quiz = chat_completion.generate_quiz(quiz_data)
     return quiz

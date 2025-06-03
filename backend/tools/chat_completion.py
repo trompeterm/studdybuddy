@@ -32,17 +32,16 @@ class ChatCompletion:
         )
         return response.choices[0].message.content
     
-    def generate_quiz(self, topic: str) -> str:
+    def generate_quiz(self, content: str) -> str:
         response = self.client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": 
                 
                 """
-                You are a professional tutor that creates quizzes for users. 
-                You will be given a topic and you will generate a quiz for the user.
+                You have been given group chat message data and you must generate a JSON object that represents a quiz question. 
                 
-                If asked for a quiz, you will generate a quiz with this JSON structure:
+                This is the JSON structure for the quiz question:
                 
                 {
                     "question": "string",
@@ -55,7 +54,7 @@ class ChatCompletion:
                 """
                 },
 
-                {"role": "user", "content": f"""Please generate me a quiz questionabout {topic}"""}
+                {"role": "user", "content": f"""Please generate a quiz json given this group chat data:  {content}"""}
             ],
             response_format={"type": "json_object"}
         )
