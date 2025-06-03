@@ -11,7 +11,7 @@ class TaskManager:
             3. Ensuring the Refiner verifies the quality of generated content
             4. Coordinating the final response to the user
             
-            Always start by acknowledging the user's request and explaining your plan.
+            Please ensure that your responses are concise and to the point.
             """,
             llm_config={
                 "config_list": [{"model": "gpt-3.5-turbo"}],
