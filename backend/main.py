@@ -16,7 +16,7 @@ app.add_middleware(
 
 @app.get("/generate-flashcard")
 async def generate_flashcard(topic: str):
-    flashcard_data = group_chat.initiate_chat(topic)
+    flashcard_data = group_chat.initiate_chat("Please generate a flashcard about " + topic)
     flashcard = chat_completion.generate_flashcard(flashcard_data)
     return flashcard
 

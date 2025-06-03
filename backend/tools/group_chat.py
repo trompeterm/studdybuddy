@@ -13,7 +13,13 @@ class StudyGroupChat:
         self.refiner = Refiner()
         self.user_proxy = UserProxyAgent(
             name="User",
-            human_input_mode="NEVER"
+            human_input_mode="NEVER",
+            llm_config={
+                "config_list": [{"model": "gpt-3.5-turbo"}],
+                "temperature": 0.7,
+                "timeout": 60
+            },
+            is_termination_msg=lambda msg: "final answer" in msg.get("content", "").lower()
         )
         
         self.agents = [
@@ -27,7 +33,7 @@ class StudyGroupChat:
         self.group_chat = GroupChat(
             agents=self.agents,
             messages=[],
-            max_round=8
+            max_round=5
         )
 
         self.manager = GroupChatManager(
@@ -46,10 +52,9 @@ class StudyGroupChat:
             message=user_message
         )
 
-        # Extract the chat history from the group chat
         chat_history = []
         for message in self.group_chat.messages:
-            if isinstance(message, dict):  # Ensure message is a dictionary
+            if isinstance(message, dict):
                 chat_history.append({
                     "role": message.get("role", "assistant"),
                     "content": message.get("content", ""),
