@@ -1,6 +1,9 @@
 import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 import './Navbar.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
+
 function CustomLink({ to, children, ...props }: any) {
     const resolvedPath = useResolvedPath(to);
     const isActive = useMatch({ path: resolvedPath.pathname, end: true });
@@ -21,7 +24,8 @@ export default function Navbar() {
                 <CustomLink to="/quiz">Quiz</CustomLink>
                 <CustomLink to="/game">Games</CustomLink>
                 <CustomLink to="/upload">Upload</CustomLink>
-                <p onClick={() => loginWithRedirect()}>Login</p>
+                <LoginButton />
+                <LogoutButton />
             </ul>
         </div>
     );
