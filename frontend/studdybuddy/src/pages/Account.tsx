@@ -19,8 +19,10 @@ export default function Account() {
         <>
             <div className="account-header">
                 <h1>Account Information</h1>
-                <LoginButton />
-                <LogoutButton />
+                <div className="account-buttons">
+                    <LoginButton />
+                    <LogoutButton />
+                </div>
             </div>
             <div className="account-container">
                 <h3>Account: {account}</h3>
