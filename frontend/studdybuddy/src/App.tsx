@@ -7,6 +7,7 @@ import Quizzes from './pages/Quizzes'
 import Upload from './pages/Upload'
 import { Routes, Route } from 'react-router-dom'
 import favicon from './assets/studdybuddy.png'
+import Account from './pages/Account'
 
 function setFavicon(url: string) {
   let link: HTMLLinkElement | null = document.querySelector("link[rel*='icon']");
@@ -30,6 +31,7 @@ function App() {
         <Route path="/game" element={<Games />} />
         <Route path="/quiz" element={<Quizzes />} />
         <Route path="/upload" element={<Upload />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
     </>
   )

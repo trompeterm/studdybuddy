@@ -24,6 +24,7 @@ export default function Navbar() {
                 <CustomLink to="/quiz">Quiz</CustomLink>
                 <CustomLink to="/game">Games</CustomLink>
                 <CustomLink to="/upload">Upload</CustomLink>
+                <CustomLink to="/account">Account</CustomLink>
                 <LoginButton />
                 <LogoutButton />
             </ul>
