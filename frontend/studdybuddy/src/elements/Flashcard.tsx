@@ -14,6 +14,7 @@ interface FlashcardProps {
 
 export default function Flashcard({ topic, question, answer, onClose, onNext, cardNumber, totalCards }: FlashcardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
+    const [isStarred, setIsStarred] = useState(false);
 
     const handleClick = () => {
         setIsFlipped(!isFlipped);
@@ -24,11 +25,18 @@ export default function Flashcard({ topic, question, answer, onClose, onNext, ca
         onNext();
     };
 
+    const handleStarClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setIsStarred(!isStarred);
+    };
+
     return (
         <div className="content-container">
             <div className="info-container">
                 <h3>{topic}</h3>
-                <p>Card {cardNumber}/{totalCards}</p>
+                <div onClick={handleStarClick} style={{ cursor: 'pointer' }}>
+                    <Star fill={isStarred ? 'currentColor' : 'none'} />
+                </div>
             </div>
             <div className={`card-container ${isFlipped ? 'flipped' : ''}`} onClick={handleClick}> 
                 <div className="front">

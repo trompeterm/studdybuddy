@@ -1,5 +1,6 @@
 import './Quiz.css';
 import { useState } from 'react';
+import { Star } from 'lucide-react';
 
 interface QuizProps {
     topic: string;
@@ -29,6 +30,7 @@ export default function Quiz( {
     totalQuestions 
 }: QuizProps) {
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+    const [isStarred, setIsStarred] = useState(false);
 
     const handleAnswerClick = (answerIndex: number) => {
         setSelectedAnswer(answerIndex);
@@ -37,6 +39,11 @@ export default function Quiz( {
     const handleNext = () => {
         setSelectedAnswer(null);
         onNext();
+    };
+
+    const handleStarClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        setIsStarred(!isStarred);
     };
 
     const getAnswerClass = (answerIndex: number) => {
@@ -50,7 +57,9 @@ export default function Quiz( {
         <div className="quiz-container">
             <div className="quiz-info">
                 <h3>{topic}</h3>
-                <p>Question {questionNumber}/{totalQuestions}</p>
+                <div onClick={handleStarClick} style={{ cursor: 'pointer' }}>
+                    <Star fill={isStarred ? 'currentColor' : 'none'} />
+                </div>
             </div>
             <div className="question-container">
                 <p>{question}</p>
