@@ -1,7 +1,6 @@
 import './App.css'
 import Navbar from './elements/Navbar'
 import Flashcards from './pages/Flashcards'
-import Games from './pages/Games'
 import Home from './pages/Home'
 import Quizzes from './pages/Quizzes'
 import Upload from './pages/Upload'
@@ -28,7 +27,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/flashcard" element={<Flashcards />} />
-        <Route path="/game" element={<Games />} />
         <Route path="/quiz" element={<Quizzes />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/account" element={<Account />} />
