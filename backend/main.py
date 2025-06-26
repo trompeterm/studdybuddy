@@ -24,8 +24,8 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/star-flashcard")
-async def star_flashcard(db: Session = Depends(get_db)):
+@app.get("/get-flashcards")
+async def get_flashcards(db: Session = Depends(get_db)):
     return db.query(Flashcard).all()
 
 @app.get("/generate-flashcard")
@@ -39,3 +39,17 @@ async def generate_quiz(topic: str):
     quiz_data = group_chat.initiate_chat("Please generate a quiz about " + topic)
     quiz = chat_completion.generate_quiz(quiz_data)
     return quiz
+
+@app.patch("/star-flashcard")
+async def star_flashcard(flashcard_id: int, db: Session = Depends(get_db)):
+    flashcard = db.query(Flashcard).filter(Flashcard.id == flashcard_id).first()
+    flashcard.starred = True
+    db.commit()
+    return {"message": "Flashcard starred"}
+
+@app.patch("/unstar-flashcard")
+async def unstar_flashcard(flashcard_id: int, db: Session = Depends(get_db)):
+    flashcard = db.query(Flashcard).filter(Flashcard.id == flashcard_id).first()
+    flashcard.starred = False
+    db.commit()
+    return {"message": "Flashcard unstarred"}
