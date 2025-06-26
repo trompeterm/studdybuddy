@@ -13,7 +13,6 @@ function CustomLink({ to, children, ...props }: any) {
 }
 
 export default function Navbar() {
-    const { loginWithRedirect } = useAuth0();
     return (
         <div className="nav">
             <Link to="/" className="site-title">StuddyBuddy</Link>

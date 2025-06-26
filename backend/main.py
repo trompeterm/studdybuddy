@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from tools.chat_completion import ChatCompletion
 from tools.group_chat import StudyGroupChat
+from sqlalchemy.orm import Session
+from tools.database import SessionLocal
+from tools.models import Flashcard
 
 app = FastAPI()
 group_chat = StudyGroupChat()
@@ -13,6 +16,17 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+@app.get("/star-flashcard")
+async def star_flashcard(db: Session = Depends(get_db)):
+    return db.query(Flashcard).all()
 
 @app.get("/generate-flashcard")
 async def generate_flashcard(topic: str):
