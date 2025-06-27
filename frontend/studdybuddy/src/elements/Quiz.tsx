@@ -1,6 +1,7 @@
 import './Quiz.css';
 import { useState } from 'react';
 import { Star } from 'lucide-react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface QuizProps {
     topic: string;
@@ -31,6 +32,7 @@ export default function Quiz( {
 }: QuizProps) {
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
     const [isStarred, setIsStarred] = useState(false);
+    const { user, isAuthenticated } = useAuth0();
 
     const handleAnswerClick = (answerIndex: number) => {
         setSelectedAnswer(answerIndex);
@@ -41,9 +43,42 @@ export default function Quiz( {
         onNext();
     };
 
-    const handleStarClick = (e: React.MouseEvent) => {
+    const handleStarClick = async (e: React.MouseEvent) => {
         e.stopPropagation();
-        setIsStarred(!isStarred);
+        
+        if (!isAuthenticated) {
+            alert('Please log in to save quiz questions');
+            return;
+        }
+
+        if (!isStarred) {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/save-flashcard', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        question: question,
+                        answer: `Correct Answer: ${correctAnswer === 1 ? answer1 : correctAnswer === 2 ? answer2 : correctAnswer === 3 ? answer3 : answer4}`,
+                        user_id: user?.email || user?.sub || 'unknown'
+                    })
+                });
+
+                if (response.ok) {
+                    setIsStarred(true);
+                    console.log('Quiz question saved successfully');
+                } else {
+                    console.error('Failed to save quiz question');
+                }
+            } catch (error) {
+                console.error('Error saving quiz question:', error);
+            }
+        } else {
+            // If already starred, we could implement unstarring logic here
+            // For now, we'll just toggle the local state
+            setIsStarred(false);
+        }
     };
 
     const getAnswerClass = (answerIndex: number) => {

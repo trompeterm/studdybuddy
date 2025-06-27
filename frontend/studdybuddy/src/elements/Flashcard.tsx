@@ -1,6 +1,7 @@
 import './Flashcard.css';
 import { useState } from 'react';
 import { Star } from 'lucide-react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface FlashcardProps {
     topic: string;
@@ -15,6 +16,7 @@ interface FlashcardProps {
 export default function Flashcard({ topic, question, answer, onClose, onNext, cardNumber, totalCards }: FlashcardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isStarred, setIsStarred] = useState(false);
+    const { user, isAuthenticated } = useAuth0();
 
     const handleClick = () => {
         setIsFlipped(!isFlipped);
@@ -25,9 +27,42 @@ export default function Flashcard({ topic, question, answer, onClose, onNext, ca
         onNext();
     };
 
-    const handleStarClick = (e: React.MouseEvent) => {
+    const handleStarClick = async (e: React.MouseEvent) => {
         e.stopPropagation();
-        setIsStarred(!isStarred);
+        
+        if (!isAuthenticated) {
+            alert('Please log in to save flashcards');
+            return;
+        }
+
+        if (!isStarred) {
+            try {
+                const response = await fetch('http://127.0.0.1:8000/save-flashcard', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        question: question,
+                        answer: answer,
+                        user_id: user?.email || user?.sub || 'unknown'
+                    })
+                });
+
+                if (response.ok) {
+                    setIsStarred(true);
+                    console.log('Flashcard saved successfully');
+                } else {
+                    console.error('Failed to save flashcard');
+                }
+            } catch (error) {
+                console.error('Error saving flashcard:', error);
+            }
+        } else {
+            // If already starred, we could implement unstarring logic here
+            // For now, we'll just toggle the local state
+            setIsStarred(false);
+        }
     };
 
     return (

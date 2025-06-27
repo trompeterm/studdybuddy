@@ -1,0 +1,122 @@
+.saved-flashcards-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.saved-flashcards-container h1 {
+    text-align: center;
+    color: #4aa3df;
+    margin-bottom: 2rem;
+}
+
+.loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin: 2rem 0;
+}
+
+.no-flashcards {
+    text-align: center;
+    color: #666;
+    margin: 2rem 0;
+}
+
+.no-flashcards p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.flashcards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.flashcard-item {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.flashcard-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.flashcard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.flashcard-header h3 {
+    margin: 0;
+    color: #4aa3df;
+    font-size: 1.1rem;
+}
+
+.unstar-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.unstar-button:hover {
+    background-color: #c82333;
+}
+
+.flashcard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.question, .answer {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border-left: 4px solid #4aa3df;
+}
+
+.question strong, .answer strong {
+    color: #4aa3df;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.question p, .answer p {
+    margin: 0;
+    line-height: 1.5;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .flashcards-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .flashcard-item {
+        padding: 1rem;
+    }
+    
+    .saved-flashcards-container {
+        padding: 1rem;
+    }
+} 

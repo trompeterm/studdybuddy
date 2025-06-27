@@ -4,6 +4,7 @@ import Flashcards from './pages/Flashcards'
 import Home from './pages/Home'
 import Quizzes from './pages/Quizzes'
 import Upload from './pages/Upload'
+import SavedFlashcards from './pages/SavedFlashcards'
 import { Routes, Route } from 'react-router-dom'
 import favicon from './assets/studdybuddy.png'
 import Account from './pages/Account'
@@ -30,6 +31,7 @@ function App() {
         <Route path="/quiz" element={<Quizzes />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/account" element={<Account />} />
+        <Route path="/saved" element={<SavedFlashcards />} />
       </Routes>
     </>
   )

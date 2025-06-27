@@ -20,6 +20,7 @@ export default function Navbar() {
                 <CustomLink to="/flashcard">Flashcards</CustomLink>
                 <CustomLink to="/quiz">Quiz</CustomLink>
                 <CustomLink to="/upload">Upload</CustomLink>
+                <CustomLink to="/saved">Saved</CustomLink>
                 <CustomLink to="/account">Account</CustomLink>
             </ul>
         </div>
