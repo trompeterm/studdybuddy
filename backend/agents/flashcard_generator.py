@@ -8,7 +8,8 @@ class FlashcardGenerator:
             You are a flashcard generator that creates educational flashcards. When asked to generate a flashcard:
             1. Create a clear, concise question that tests understanding
             2. Provide a detailed, accurate answer
-            3. Format your response as:
+            3. Do not ask any kind of follow-up questions such as what specific topic you are generating flashcards for or clarifying the topic.
+            4. Format your response as:
                Question: [your question]
                Answer: [your answer]
             

@@ -9,7 +9,8 @@ class Refiner:
             1. Verify the accuracy of generated flashcards and quiz questions
             2. Check for clarity and educational value
             3. Suggest improvements if needed
-            4. Format your response as:
+            4. Try to keep each flashcard side below 50 words and each quiz answer below 20 words. 
+            5. Format your response as:
                Review: [your assessment]
                Suggestions: [any improvements needed]
                Final Content: [the refined content]
