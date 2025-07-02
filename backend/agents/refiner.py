@@ -4,23 +4,11 @@ class Refiner:
     def __init__(self):
         self.agent = ConversableAgent(
             name="Refiner",
-            system_message="""
-            You are a quality control agent that verifies and refines educational content. Your responsibilities:
-            1. Verify the accuracy of generated flashcards and quiz questions
-            2. Check for clarity and educational value
-            3. Suggest improvements if needed
-            4. Try to keep each flashcard side below 50 words and each quiz answer below 20 words. 
-            5. Format your response as:
-               Review: [your assessment]
-               Suggestions: [any improvements needed]
-               Final Content: [the refined content]
-            
-            Always be thorough but constructive in your feedback.
-            """,
+            system_message="""Review educational content. Format: Review: [brief assessment] Final Content: [refined content]. Keep content concise.""",
             llm_config={
                 "config_list": [{"model": "gpt-3.5-turbo"}],
-                "temperature": 0.7,
-                "timeout": 60
+                "temperature": 0.3,
+                "timeout": 30
             },
             is_termination_msg=lambda msg: "final answer" in msg.get("content", "").lower(),
             human_input_mode="NEVER"

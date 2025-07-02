@@ -60,7 +60,7 @@ async def save_flashcard(flashcard: FlashcardCreate, db: Session = Depends(get_d
 
 @app.get("/generate-quiz")
 async def generate_quiz(topic: str):
-    quiz_data = group_chat.initiate_chat("Please generate a quiz about " + topic)
+    quiz_data = group_chat.initiate_chat("Please generate a quiz question about " + topic)
     quiz = chat_completion.generate_quiz(quiz_data)
     return quiz
 
