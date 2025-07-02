@@ -12,9 +12,6 @@ interface QuizProps {
     answer4: string;
     correctAnswer: number;
     onClose: () => void;
-    onNext: () => void;
-    questionNumber: number;
-    totalQuestions: number;
 }
 
 export default function Quiz( { 
@@ -25,10 +22,7 @@ export default function Quiz( {
     answer3, 
     answer4, 
     correctAnswer, 
-    onClose, 
-    onNext,
-    questionNumber,
-    totalQuestions 
+    onClose
 }: QuizProps) {
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
     const [isStarred, setIsStarred] = useState(false);
@@ -36,11 +30,6 @@ export default function Quiz( {
 
     const handleAnswerClick = (answerIndex: number) => {
         setSelectedAnswer(answerIndex);
-    };
-
-    const handleNext = () => {
-        setSelectedAnswer(null);
-        onNext();
     };
 
     const handleStarClick = async (e: React.MouseEvent) => {
@@ -75,8 +64,6 @@ export default function Quiz( {
                 console.error('Error saving quiz question:', error);
             }
         } else {
-            // If already starred, we could implement unstarring logic here
-            // For now, we'll just toggle the local state
             setIsStarred(false);
         }
     };
@@ -119,10 +106,6 @@ export default function Quiz( {
             </div>
             <div className="quiz-controls">
                 <button onClick={onClose}>Close</button>
-                <ul>
-                    <button>Previous</button>
-                    <button onClick={handleNext}>Next</button>
-                </ul>
             </div>
         </div>
     );

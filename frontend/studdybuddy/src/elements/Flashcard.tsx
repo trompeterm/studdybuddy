@@ -8,23 +8,15 @@ interface FlashcardProps {
     question: string;
     answer: string;
     onClose: () => void;
-    onNext: () => void;
-    cardNumber: number;
-    totalCards: number;
 }
 
-export default function Flashcard({ topic, question, answer, onClose, onNext, cardNumber, totalCards }: FlashcardProps) {
+export default function Flashcard({ topic, question, answer, onClose}: FlashcardProps) {
     const [isFlipped, setIsFlipped] = useState(false);
     const [isStarred, setIsStarred] = useState(false);
     const { user, isAuthenticated } = useAuth0();
 
     const handleClick = () => {
         setIsFlipped(!isFlipped);
-    };
-
-    const handleNext = () => {
-        setIsFlipped(false);
-        onNext();
     };
 
     const handleStarClick = async (e: React.MouseEvent) => {
@@ -59,8 +51,6 @@ export default function Flashcard({ topic, question, answer, onClose, onNext, ca
                 console.error('Error saving flashcard:', error);
             }
         } else {
-            // If already starred, we could implement unstarring logic here
-            // For now, we'll just toggle the local state
             setIsStarred(false);
         }
     };
@@ -83,10 +73,6 @@ export default function Flashcard({ topic, question, answer, onClose, onNext, ca
             </div>
             <div className="button-container">
                 <button onClick={onClose}>Close</button>
-                <ul>
-                    <button>Previous</button>
-                    <button onClick={handleNext}>Next</button>
-                </ul>
             </div>
         </div>
     );
