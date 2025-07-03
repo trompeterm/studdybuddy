@@ -1,0 +1,45 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.13
+        
+      - name: Install dependencies
+      run:
+        curl -LsSf https://astral.sh/uv/install.sh | sh
+        ~/.cargo/bin/uv venv
+        source .venv/bin/activate
+        uv pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install frontend dependencies
+        working-directory: frontend/studdybuddy
+        run: bun install
+
+      - name: Build frontend
+        working-directory: frontend/studdybuddy
+        run: bun run build
+
+      - name: Lint frontend
+        working-directory: frontend/studdybuddy
+        run: bun run lint
