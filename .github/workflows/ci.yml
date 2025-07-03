@@ -20,7 +20,7 @@ jobs:
           python-version: 3.13
         
       - name: Install dependencies
-      run:
+        run:
         curl -LsSf https://astral.sh/uv/install.sh | sh
         ~/.cargo/bin/uv venv
         source .venv/bin/activate
