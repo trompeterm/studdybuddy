@@ -21,10 +21,10 @@ jobs:
         
       - name: Install dependencies
         run:
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        ~/.cargo/bin/uv venv
-        source .venv/bin/activate
-        uv pip install -r requirements.txt
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          ~/.cargo/bin/uv venv
+          source .venv/bin/activate
+          uv pip install -r requirements.txt
 
       - name: Run tests
         run: pytest
