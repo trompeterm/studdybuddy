@@ -48,15 +48,12 @@ export default function Flashcards() {
                     question={question} 
                     answer={answer} 
                     onClose={() => setShowFlashcard(false)}
-                    onNext={handleNext}
-                    cardNumber={currentCard}
-                    totalCards={10}
                 />
             ) : isLoading ? (
                 <LoadingSpinner />
             ) : (
                 <>
-                    <h1 className="main-label">I want to studdy...</h1>
+                    <h1 className="main-label">I want to study...</h1>
                     <div className="input-container">
                         <div className="input-group">
                             <button onClick={() => setVisibleMath(!visibleMath)}>Math</button>
