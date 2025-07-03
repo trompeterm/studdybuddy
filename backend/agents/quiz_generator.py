@@ -4,7 +4,10 @@ class QuizGenerator:
     def __init__(self):
         self.agent = ConversableAgent(
             name="Quiz_Generator",
-            system_message="""Create multiple-choice questions. Format: Question: [question] A) [choice] B) [choice] C) [choice] D) [choice] Correct Answer: [letter]. Keep choices under 15 words.""",
+            system_message="""You are responsible for creating educational quiz questions.
+            Only respond if TaskManager explicitly asks you to generate a question.
+            If the task is not directed at you, say nothing.
+            """,
             llm_config={
                 "config_list": [{"model": "gpt-3.5-turbo"}],
                 "temperature": 0.3,

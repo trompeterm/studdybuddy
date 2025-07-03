@@ -4,7 +4,9 @@ class Refiner:
     def __init__(self):
         self.agent = ConversableAgent(
             name="Refiner",
-            system_message="""Review educational content. Format: Review: [brief assessment] Final Content: [refined content]. Keep content concise.""",
+            system_message="""Review educational content. Format: Review: [brief assessment] Final Content: [refined content]. Keep content concise.
+            You must include the string "final answer" in your response to indicate that you have finished refining the content.
+            """,
             llm_config={
                 "config_list": [{"model": "gpt-3.5-turbo"}],
                 "temperature": 0.3,

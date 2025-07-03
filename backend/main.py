@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from tools.chat_completion import ChatCompletion
 from tools.group_chat import StudyGroupChat
 from sqlalchemy.orm import Session
 from tools.database import SessionLocal
 from tools.models import Flashcard
+from tools.pdf_reader import PDFReader
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -81,3 +82,17 @@ async def unstar_flashcard(flashcard_id: int, db: Session = Depends(get_db)):
     flashcard.starred = False
     db.commit()
     return {"message": "Flashcard unstarred"}
+
+@app.post("/flashcard-from-pdf")
+async def flashcard_from_pdf(file: UploadFile = File(...)):
+    # Save uploaded file to a temporary location
+    import tempfile
+    import shutil
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+        shutil.copyfileobj(file.file, tmp)
+        tmp_path = tmp.name
+    pdf_reader = PDFReader(tmp_path)
+    text = pdf_reader.get_text()
+    flashcard_data = group_chat.initiate_chat("Please generate a flashcard from these class notes: " + str(text))
+    flashcard = chat_completion.generate_flashcard(flashcard_data)
+    return flashcard

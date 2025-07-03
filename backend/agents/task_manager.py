@@ -4,7 +4,12 @@ class TaskManager:
     def __init__(self):
         self.agent = ConversableAgent(
             name="Task_Manager",
-            system_message="""Coordinate team tasks. Delegate to FlashcardGenerator or QuizGenerator, then Refiner. Be concise.""",
+            system_message="""Coordinate team tasks. Delegate to FlashcardGenerator OR QuizGenerator (not both), then Refiner. Be concise.
+            It is important that only one of FlashcardGenerator or QuizGenerator speaks in the chat.
+            If you are asked to generate a flashcard, you should delegate to FlashcardGenerator.
+            If you are asked to generate a quiz, you should delegate to QuizGenerator.
+            If asked for a flashcard, do not generate a quiz. If asked for a quiz, do not generate a flashcard.
+            """,
             llm_config={
                 "config_list": [{"model": "gpt-3.5-turbo"}],
                 "temperature": 0.3,
