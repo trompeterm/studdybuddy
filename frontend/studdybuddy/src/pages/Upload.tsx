@@ -51,14 +51,16 @@ export default function Upload() {
     };
 
     return (
-        <div className="upload-container">
-            <h1 className="upload-title">Upload PDF to Generate Flashcard</h1>
-            <input type="file" accept="application/pdf" onChange={handleFileChange} className="upload-input" />
-            <button onClick={handleUpload} disabled={!file || isLoading} className="upload-btn">
-                Generate Flashcard
-            </button>
-            {isLoading && <LoadingSpinner />}
-            {error && <div className="upload-error">{error}</div>}
+        <>
+            <div className="upload-container">
+                <h1 className="upload-title">Upload PDF to Generate Flashcard</h1>
+                <input type="file" accept="application/pdf" onChange={handleFileChange} className="upload-input" />
+                <button onClick={handleUpload} disabled={!file || isLoading} className="upload-btn">
+                    Generate Flashcard
+                </button>
+                {isLoading && <LoadingSpinner />}
+                {error && <div className="upload-error">{error}</div>}
+            </div>
             {showFlashcard && flashcard && (
                 <div className="upload-flashcard">
                     <Flashcard
@@ -69,6 +71,6 @@ export default function Upload() {
                     />
                 </div>
             )}
-        </div>
+        </>
     );
 }
