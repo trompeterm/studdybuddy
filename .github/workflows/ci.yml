@@ -24,7 +24,7 @@ jobs:
           curl -LsSf https://astral.sh/uv/install.sh | sh
           uv venv
           source .venv/bin/activate
-          uv pip install -r requirements.txt
+          uv pip install --no-deps -r uv.lock
 
       - name: Set up bun
         uses: oven-sh/setup-bun@v1
