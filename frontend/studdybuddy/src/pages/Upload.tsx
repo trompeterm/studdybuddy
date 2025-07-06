@@ -43,7 +43,7 @@ export default function Upload() {
             } else {
                 setError('Failed to generate flashcard.');
             }
-        } catch (err) {
+        } catch {
             setError('Error uploading file.');
         } finally {
             setIsLoading(false);
