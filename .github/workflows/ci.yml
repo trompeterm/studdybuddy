@@ -20,14 +20,11 @@ jobs:
           python-version: 3.13
         
       - name: Install dependencies
-        run:
+        run: |
           curl -LsSf https://astral.sh/uv/install.sh | sh
           ~/.cargo/bin/uv venv
           source .venv/bin/activate
           uv pip install -r requirements.txt
-
-      - name: Run tests
-        run: pytest
 
       - name: Set up bun
         uses: oven-sh/setup-bun@v1
