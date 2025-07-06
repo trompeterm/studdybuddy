@@ -66,9 +66,6 @@ export default function Quizzes() {
                     answer4={quizData.answer4}
                     correctAnswer={quizData.correctAnswer}
                     onClose={() => setShowQuiz(false)}
-                    onNext={handleNext}
-                    questionNumber={currentQuestion}
-                    totalQuestions={10}
                 />
             ) : isLoading ? (
                 <LoadingSpinner />
