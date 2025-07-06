@@ -12,7 +12,6 @@ export default function Flashcards() {
     const [showFlashcard, setShowFlashcard] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState('');
-    const [currentCard, setCurrentCard] = useState(1);
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
 
@@ -22,7 +21,6 @@ export default function Flashcards() {
         await loadFlashcard(topic);
         setIsLoading(false);
         setShowFlashcard(true);
-        setCurrentCard(1);
     };
 
     const loadFlashcard = async (topic: string) => {
@@ -32,13 +30,6 @@ export default function Flashcards() {
         setQuestion(data.question);
         setAnswer(data.answer);
     }
-
-    const handleNext = async () => {
-        setIsLoading(true);
-        await loadFlashcard(selectedTopic);
-        setIsLoading(false);
-        setCurrentCard(prev => prev + 1);
-    };
 
     return (
         <div className="container">

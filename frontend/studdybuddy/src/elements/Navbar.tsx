@@ -1,6 +1,5 @@
 import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 import './Navbar.css';
-import { useAuth0 } from '@auth0/auth0-react';
 
 function CustomLink({ to, children, ...props }: any) {
     const resolvedPath = useResolvedPath(to);

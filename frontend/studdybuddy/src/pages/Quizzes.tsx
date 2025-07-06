@@ -11,8 +11,6 @@ export default function Quizzes() {
     const [visibleCoding, setVisibleCoding] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [selectedTopic, setSelectedTopic] = useState('');
-    const [currentQuestion, setCurrentQuestion] = useState(1);
     const [quizData, setQuizData] = useState({
         topic: '',
         question: '',
@@ -24,12 +22,10 @@ export default function Quizzes() {
     });
 
     const handleTopicClick = async (topic: string) => {
-        setSelectedTopic(topic);
         setIsLoading(true);
         await loadQuiz(topic);
         setIsLoading(false);
         setShowQuiz(true);
-        setCurrentQuestion(1);
     };
 
     const loadQuiz = async (topic: string) => {
@@ -46,13 +42,6 @@ export default function Quizzes() {
             correctAnswer: data.correctAnswer
         });
     }
-
-    const handleNext = async () => {
-        setIsLoading(true);
-        await loadQuiz(selectedTopic);
-        setIsLoading(false);
-        setCurrentQuestion(prev => prev + 1);
-    };
 
     return (
         <div className="container">
