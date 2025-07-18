@@ -4,6 +4,7 @@ import Quiz from '../elements/Quiz';
 import LoadingSpinner from '../elements/LoadingSpinner';
 
 export default function Quizzes() {
+    const BASE_URL = import.meta.env.VITE_API_URL;
     const [visibleMath, setVisibleMath] = useState(false);
     const [visibleScience, setVisibleScience] = useState(false);
     const [visibleHistory, setVisibleHistory] = useState(false);
@@ -29,7 +30,7 @@ export default function Quizzes() {
     };
 
     const loadQuiz = async (topic: string) => {
-        const response = await fetch(`http://127.0.0.1:8000/generate-quiz?topic=${encodeURIComponent(topic)}`);
+        const response = await fetch(`${BASE_URL}/generate-quiz?topic=${encodeURIComponent(topic)}`);
         const jsonString = await response.json();
         const data = JSON.parse(jsonString);
         setQuizData({

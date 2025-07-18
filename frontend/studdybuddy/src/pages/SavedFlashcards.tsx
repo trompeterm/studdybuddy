@@ -11,6 +11,7 @@ interface SavedFlashcard {
 }
 
 export default function SavedFlashcards() {
+    const BASE_URL = import.meta.env.VITE_API_URL;
     const [flashcards, setFlashcards] = useState<SavedFlashcard[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const { user, isAuthenticated } = useAuth0();
@@ -27,7 +28,7 @@ export default function SavedFlashcards() {
         setIsLoading(true);
         try {
             const user_id = user.email || user.sub || 'unknown';
-            const response = await fetch(`http://127.0.0.1:8000/get-user-flashcards?user_id=${encodeURIComponent(user_id)}`);
+            const response = await fetch(`${BASE_URL}/get-user-flashcards?user_id=${encodeURIComponent(user_id)}`);
             if (response.ok) {
                 const data = await response.json();
                 setFlashcards(data);
@@ -43,11 +44,10 @@ export default function SavedFlashcards() {
 
     const handleUnstar = async (flashcardId: number) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/unstar-flashcard?flashcard_id=${flashcardId}`, {
+            const response = await fetch(`${BASE_URL}/unstar-flashcard?flashcard_id=${flashcardId}`, {
                 method: 'PATCH'
             });
             if (response.ok) {
-                // Remove the flashcard from the list
                 setFlashcards(prev => prev.filter(fc => fc.id !== flashcardId));
             } else {
                 console.error('Failed to unstar flashcard');

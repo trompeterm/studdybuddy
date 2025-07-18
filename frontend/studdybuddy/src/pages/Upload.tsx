@@ -4,6 +4,7 @@ import LoadingSpinner from '../elements/LoadingSpinner';
 import './Upload.css';
 
 export default function Upload() {
+    const BASE_URL = import.meta.env.VITE_API_URL;
     const [file, setFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [flashcard, setFlashcard] = useState<{ question: string; answer: string } | null>(null);
@@ -25,7 +26,7 @@ export default function Upload() {
         try {
             const formData = new FormData();
             formData.append('file', file);
-            const response = await fetch('http://127.0.0.1:8000/flashcard-from-pdf', {
+            const response = await fetch(`${BASE_URL}/flashcard-from-pdf`, {
                 method: 'POST',
                 body: formData,
             });

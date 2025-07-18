@@ -24,6 +24,7 @@ export default function Quiz( {
     correctAnswer, 
     onClose
 }: QuizProps) {
+    const BASE_URL = import.meta.env.VITE_API_URL;
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
     const [isStarred, setIsStarred] = useState(false);
     const { user, isAuthenticated } = useAuth0();
@@ -42,7 +43,7 @@ export default function Quiz( {
 
         if (!isStarred) {
             try {
-                const response = await fetch('http://127.0.0.1:8000/save-flashcard', {
+                const response = await fetch(`${BASE_URL}/save-flashcard`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

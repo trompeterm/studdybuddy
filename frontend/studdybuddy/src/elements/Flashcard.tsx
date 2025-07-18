@@ -11,6 +11,8 @@ interface FlashcardProps {
 }
 
 export default function Flashcard({ topic, question, answer, onClose}: FlashcardProps) {
+
+    const BASE_URL = import.meta.env.VITE_API_URL;
     const [isFlipped, setIsFlipped] = useState(false);
     const [isStarred, setIsStarred] = useState(false);
     const { user, isAuthenticated } = useAuth0();
@@ -29,7 +31,7 @@ export default function Flashcard({ topic, question, answer, onClose}: Flashcard
 
         if (!isStarred) {
             try {
-                const response = await fetch('http://127.0.0.1:8000/save-flashcard', {
+                const response = await fetch(`${BASE_URL}/save-flashcard`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
