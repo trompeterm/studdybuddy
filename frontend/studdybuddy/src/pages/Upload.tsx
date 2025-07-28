@@ -3,11 +3,17 @@ import Flashcard from '../elements/Flashcard';
 import LoadingSpinner from '../elements/LoadingSpinner';
 import './Upload.css';
 
+interface FlashcardData {
+    question: string;
+    answer: string;
+}
+
 export default function Upload() {
     const BASE_URL = import.meta.env.VITE_API_URL;
     const [file, setFile] = useState<File | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [flashcard, setFlashcard] = useState<{ question: string; answer: string } | null>(null);
+    const [flashcards, setFlashcards] = useState<FlashcardData[]>([]);
+    const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
     const [error, setError] = useState<string | null>(null);
     const [showFlashcard, setShowFlashcard] = useState(false);
 
@@ -22,7 +28,8 @@ export default function Upload() {
         setIsLoading(true);
         setError(null);
         setShowFlashcard(false);
-        setFlashcard(null);
+        setFlashcards([]);
+        setCurrentFlashcardIndex(0);
         try {
             const formData = new FormData();
             formData.append('file', file);
@@ -32,17 +39,14 @@ export default function Upload() {
             });
             if (response.ok) {
                 const data = await response.json();
-                let flashcardObj = data;
+                let flashcardArray = data;
                 if (typeof data === 'string') {
-                    flashcardObj = JSON.parse(data);
+                    flashcardArray = JSON.parse(data);
                 }
-                setFlashcard({
-                    question: flashcardObj.question,
-                    answer: flashcardObj.answer,
-                });
+                setFlashcards(flashcardArray);
                 setShowFlashcard(true);
             } else {
-                setError('Failed to generate flashcard.');
+                setError('Failed to generate flashcards.');
             }
         } catch {
             setError('Error uploading file.');
@@ -51,24 +55,40 @@ export default function Upload() {
         }
     };
 
+    const handleNext = () => {
+        if (currentFlashcardIndex < flashcards.length - 1) {
+            setCurrentFlashcardIndex(currentFlashcardIndex + 1);
+        }
+    };
+
+    const handleClose = () => {
+        setShowFlashcard(false);
+        setFlashcards([]);
+        setCurrentFlashcardIndex(0);
+    };
+
     return (
         <>
             <div className="upload-container">
-                <h1 className="upload-title">Upload PDF to Generate Flashcard</h1>
+                <h1 className="upload-title">Upload PDF to Generate Flashcards</h1>
                 <input type="file" accept="application/pdf" onChange={handleFileChange} className="upload-input" />
                 <button onClick={handleUpload} disabled={!file || isLoading} className="upload-btn">
-                    Generate Flashcard
+                    Generate Flashcards
                 </button>
                 {isLoading && <LoadingSpinner />}
                 {error && <div className="upload-error">{error}</div>}
             </div>
-            {showFlashcard && flashcard && (
+            {showFlashcard && flashcards.length > 0 && (
                 <div className="upload-flashcard">
                     <Flashcard
                         topic={file ? file.name : 'PDF'}
-                        question={flashcard.question}
-                        answer={flashcard.answer}
-                        onClose={() => setShowFlashcard(false)}
+                        question={flashcards[currentFlashcardIndex].question}
+                        answer={flashcards[currentFlashcardIndex].answer}
+                        currentIndex={currentFlashcardIndex + 1}
+                        totalCount={flashcards.length}
+                        onNext={handleNext}
+                        onClose={handleClose}
+                        canGoNext={currentFlashcardIndex < flashcards.length - 1}
                     />
                 </div>
             )}

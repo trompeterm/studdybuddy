@@ -13,6 +13,16 @@
     display: flex;
     justify-content: space-between;
     align-items: stretch;
+    gap: 1rem;
+    padding: 0 1rem;
+}
+
+.quiz-counter {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
 }
 
 .question-container {
@@ -72,6 +82,24 @@
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     max-height: 2rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.quiz-controls button:hover:not(:disabled) {
+    background-color: #3a8bc7;
+}
+
+.quiz-controls button:disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.quiz-controls button.disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
 }
 
 .quiz-container button.correct {

@@ -3,6 +3,11 @@ import './Flashcards.css';
 import Flashcard from '../elements/Flashcard';
 import LoadingSpinner from '../elements/LoadingSpinner';
 
+interface FlashcardData {
+    question: string;
+    answer: string;
+}
+
 export default function Flashcards() {
     const BASE_URL = import.meta.env.VITE_API_URL;
     const [visibleMath, setVisibleMath] = useState(false);
@@ -13,33 +18,49 @@ export default function Flashcards() {
     const [showFlashcard, setShowFlashcard] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState('');
-    const [question, setQuestion] = useState('');
-    const [answer, setAnswer] = useState('');
+    const [flashcards, setFlashcards] = useState<FlashcardData[]>([]);
+    const [currentFlashcardIndex, setCurrentFlashcardIndex] = useState(0);
 
     const handleTopicClick = async (topic: string) => {
         setSelectedTopic(topic);
         setIsLoading(true);
-        await loadFlashcard(topic);
+        await loadFlashcards(topic);
         setIsLoading(false);
         setShowFlashcard(true);
+        setCurrentFlashcardIndex(0);
     };
 
-    const loadFlashcard = async (topic: string) => {
+    const loadFlashcards = async (topic: string) => {
         const response = await fetch(`${BASE_URL}/generate-flashcard?topic=${encodeURIComponent(topic)}`);
         const jsonString = await response.json();
         const data = JSON.parse(jsonString);
-        setQuestion(data.question);
-        setAnswer(data.answer);
+        setFlashcards(data);
     }
+
+    const handleNext = () => {
+        if (currentFlashcardIndex < flashcards.length - 1) {
+            setCurrentFlashcardIndex(currentFlashcardIndex + 1);
+        }
+    };
+
+    const handleClose = () => {
+        setShowFlashcard(false);
+        setFlashcards([]);
+        setCurrentFlashcardIndex(0);
+    };
 
     return (
         <div className="container">
-            {showFlashcard ? (
+            {showFlashcard && flashcards.length > 0 ? (
                 <Flashcard 
                     topic={selectedTopic} 
-                    question={question} 
-                    answer={answer} 
-                    onClose={() => setShowFlashcard(false)}
+                    question={flashcards[currentFlashcardIndex].question} 
+                    answer={flashcards[currentFlashcardIndex].answer} 
+                    currentIndex={currentFlashcardIndex + 1}
+                    totalCount={flashcards.length}
+                    onNext={handleNext}
+                    onClose={handleClose}
+                    canGoNext={currentFlashcardIndex < flashcards.length - 1}
                 />
             ) : isLoading ? (
                 <LoadingSpinner />

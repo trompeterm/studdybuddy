@@ -7,10 +7,23 @@ interface FlashcardProps {
     topic: string;
     question: string;
     answer: string;
+    currentIndex: number;
+    totalCount: number;
+    onNext: () => void;
     onClose: () => void;
+    canGoNext: boolean;
 }
 
-export default function Flashcard({ topic, question, answer, onClose}: FlashcardProps) {
+export default function Flashcard({ 
+    topic, 
+    question, 
+    answer, 
+    currentIndex, 
+    totalCount, 
+    onNext, 
+    onClose, 
+    canGoNext
+}: FlashcardProps) {
 
     const BASE_URL = import.meta.env.VITE_API_URL;
     const [isFlipped, setIsFlipped] = useState(false);
@@ -57,10 +70,21 @@ export default function Flashcard({ topic, question, answer, onClose}: Flashcard
         }
     };
 
+    const handleNext = () => {
+        if (canGoNext) {
+            setIsFlipped(false);
+            setIsStarred(false);
+            onNext();
+        }
+    };
+
     return (
         <div className="content-container">
             <div className="info-container">
                 <h3>{topic}</h3>
+                <div className="flashcard-counter">
+                    {currentIndex} / {totalCount}
+                </div>
                 <div onClick={handleStarClick} style={{ cursor: 'pointer' }}>
                     <Star fill={isStarred ? 'currentColor' : 'none'} />
                 </div>
@@ -75,6 +99,13 @@ export default function Flashcard({ topic, question, answer, onClose}: Flashcard
             </div>
             <div className="button-container">
                 <button onClick={onClose}>Close</button>
+                <button 
+                    onClick={handleNext} 
+                    disabled={!canGoNext}
+                    className={!canGoNext ? 'disabled' : ''}
+                >
+                    Next
+                </button>
             </div>
         </div>
     );

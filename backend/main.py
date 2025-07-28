@@ -42,7 +42,7 @@ async def get_user_flashcards(user_id: str, db: Session = Depends(get_db)):
 
 @app.get("/generate-flashcard")
 async def generate_flashcard(topic: str):
-    flashcard_data = group_chat.initiate_chat("Please generate a flashcard about " + topic)
+    flashcard_data = group_chat.initiate_chat("Please generate 5 flashcards about " + topic)
     flashcard = chat_completion.generate_flashcard(flashcard_data)
     return flashcard
 
@@ -61,7 +61,7 @@ async def save_flashcard(flashcard: FlashcardCreate, db: Session = Depends(get_d
 
 @app.get("/generate-quiz")
 async def generate_quiz(topic: str):
-    quiz_data = group_chat.initiate_chat("Please generate a quiz question about " + topic)
+    quiz_data = group_chat.initiate_chat("Please generate 5 quiz questions about " + topic)
     quiz = chat_completion.generate_quiz(quiz_data)
     return quiz
 

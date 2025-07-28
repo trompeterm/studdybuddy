@@ -11,7 +11,11 @@ interface QuizProps {
     answer3: string;
     answer4: string;
     correctAnswer: number;
+    currentIndex: number;
+    totalCount: number;
+    onNext: () => void;
     onClose: () => void;
+    canGoNext: boolean;
 }
 
 export default function Quiz( { 
@@ -22,7 +26,11 @@ export default function Quiz( {
     answer3, 
     answer4, 
     correctAnswer, 
-    onClose
+    currentIndex,
+    totalCount,
+    onNext,
+    onClose,
+    canGoNext
 }: QuizProps) {
     const BASE_URL = import.meta.env.VITE_API_URL;
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
@@ -69,6 +77,14 @@ export default function Quiz( {
         }
     };
 
+    const handleNext = () => {
+        if (canGoNext) {
+            setSelectedAnswer(null);
+            setIsStarred(false);
+            onNext();
+        }
+    };
+
     const getAnswerClass = (answerIndex: number) => {
         if (selectedAnswer === null) return '';
         if (answerIndex === correctAnswer) return 'correct';
@@ -80,6 +96,9 @@ export default function Quiz( {
         <div className="quiz-container">
             <div className="quiz-info">
                 <h3>{topic}</h3>
+                <div className="quiz-counter">
+                    {currentIndex} / {totalCount}
+                </div>
                 <div onClick={handleStarClick} style={{ cursor: 'pointer' }}>
                     <Star fill={isStarred ? 'currentColor' : 'none'} />
                 </div>
@@ -107,6 +126,13 @@ export default function Quiz( {
             </div>
             <div className="quiz-controls">
                 <button onClick={onClose}>Close</button>
+                <button 
+                    onClick={handleNext} 
+                    disabled={!canGoNext}
+                    className={!canGoNext ? 'disabled' : ''}
+                >
+                    Next
+                </button>
             </div>
         </div>
     );

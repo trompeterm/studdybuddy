@@ -26,6 +26,14 @@
     align-items: center;
 }
 
+.flashcard-counter {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
 .card-container, .flipper {
     color: white;
     border-radius: 1rem;
@@ -82,6 +90,24 @@ p.show {
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
     max-height: 2rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.button-container button:hover:not(:disabled) {
+    background-color: #3a8bc7;
+}
+
+.button-container button:disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.button-container button.disabled {
+    background-color: #ccc;
+    color: #999;
+    cursor: not-allowed;
 }
 
 .front, .back {

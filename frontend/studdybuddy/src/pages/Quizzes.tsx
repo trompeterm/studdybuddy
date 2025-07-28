@@ -3,6 +3,15 @@ import './Quizzes.css';
 import Quiz from '../elements/Quiz';
 import LoadingSpinner from '../elements/LoadingSpinner';
 
+interface QuizData {
+    question: string;
+    answer1: string;
+    answer2: string;
+    answer3: string;
+    answer4: string;
+    correctAnswer: number;
+}
+
 export default function Quizzes() {
     const BASE_URL = import.meta.env.VITE_API_URL;
     const [visibleMath, setVisibleMath] = useState(false);
@@ -12,50 +21,54 @@ export default function Quizzes() {
     const [visibleCoding, setVisibleCoding] = useState(false);
     const [showQuiz, setShowQuiz] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [quizData, setQuizData] = useState({
-        topic: '',
-        question: '',
-        answer1: '',
-        answer2: '',
-        answer3: '',
-        answer4: '',
-        correctAnswer: 1
-    });
+    const [selectedTopic, setSelectedTopic] = useState('');
+    const [quizQuestions, setQuizQuestions] = useState<QuizData[]>([]);
+    const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
 
     const handleTopicClick = async (topic: string) => {
+        setSelectedTopic(topic);
         setIsLoading(true);
-        await loadQuiz(topic);
+        await loadQuizQuestions(topic);
         setIsLoading(false);
         setShowQuiz(true);
+        setCurrentQuizIndex(0);
     };
 
-    const loadQuiz = async (topic: string) => {
+    const loadQuizQuestions = async (topic: string) => {
         const response = await fetch(`${BASE_URL}/generate-quiz?topic=${encodeURIComponent(topic)}`);
         const jsonString = await response.json();
         const data = JSON.parse(jsonString);
-        setQuizData({
-            topic: topic,
-            question: data.question,
-            answer1: data.answer1,
-            answer2: data.answer2,
-            answer3: data.answer3,
-            answer4: data.answer4,
-            correctAnswer: data.correctAnswer
-        });
+        setQuizQuestions(data);
     }
+
+    const handleNext = () => {
+        if (currentQuizIndex < quizQuestions.length - 1) {
+            setCurrentQuizIndex(currentQuizIndex + 1);
+        }
+    };
+
+    const handleClose = () => {
+        setShowQuiz(false);
+        setQuizQuestions([]);
+        setCurrentQuizIndex(0);
+    };
 
     return (
         <div className="container">
-            {showQuiz ? (
+            {showQuiz && quizQuestions.length > 0 ? (
                 <Quiz 
-                    topic={quizData.topic}
-                    question={quizData.question}
-                    answer1={quizData.answer1}
-                    answer2={quizData.answer2}
-                    answer3={quizData.answer3}
-                    answer4={quizData.answer4}
-                    correctAnswer={quizData.correctAnswer}
-                    onClose={() => setShowQuiz(false)}
+                    topic={selectedTopic}
+                    question={quizQuestions[currentQuizIndex].question}
+                    answer1={quizQuestions[currentQuizIndex].answer1}
+                    answer2={quizQuestions[currentQuizIndex].answer2}
+                    answer3={quizQuestions[currentQuizIndex].answer3}
+                    answer4={quizQuestions[currentQuizIndex].answer4}
+                    correctAnswer={quizQuestions[currentQuizIndex].correctAnswer}
+                    currentIndex={currentQuizIndex + 1}
+                    totalCount={quizQuestions.length}
+                    onNext={handleNext}
+                    onClose={handleClose}
+                    canGoNext={currentQuizIndex < quizQuestions.length - 1}
                 />
             ) : isLoading ? (
                 <LoadingSpinner />
