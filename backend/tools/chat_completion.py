@@ -15,14 +15,17 @@ class ChatCompletion:
                 {"role": "system", "content": 
                 
                 """
-                You have been given group chat message data and you must generate a JSON object that represents a flashcard. 
+                You have been given group chat message data and you must generate a JSON object that represents 5 flashcards. 
                 
-                This is the JSON structure for the flashcard:
+                This is the JSON structure for the flashcards:
                 
-                {
-                    "question": "string",
-                    "answer": "string"
-                }
+                [
+                    {
+                        "question": "string",
+                        "answer": "string"
+                    },
+                    ...
+                ]
                 """
                 },
 
@@ -39,18 +42,29 @@ class ChatCompletion:
                 {"role": "system", "content": 
                 
                 """
-                You have been given group chat message data and you must generate a JSON object that represents a quiz question. 
+                You have been given group chat message data and you must generate a JSON object that represents 5 quiz questions. 
                 
-                This is the JSON structure for the quiz question:
+                This is the JSON structure for the quiz questions:
                 
-                {
-                    "question": "string",
-                    "answer1": "string",
-                    "answer2": "string",
-                    "answer3": "string",
-                    "answer4": "string",
-                    "correctAnswer": "number"
-                }
+                [
+                    {
+                        "question": "string",
+                        "answer1": "string",
+                        "answer2": "string",
+                        "answer3": "string",
+                        "answer4": "string",
+                        "correctAnswer": "number"
+                    },
+                    {
+                        "question": "string",
+                        "answer1": "string",
+                        "answer2": "string",
+                        "answer3": "string",
+                        "answer4": "string",
+                        "correctAnswer": "number"
+                    },
+                ...
+                ]
                 """
                 },
 
