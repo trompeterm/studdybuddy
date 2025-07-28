@@ -15,7 +15,7 @@ class ChatCompletion:
                 {"role": "system", "content": 
                 
                 """
-                You have been given group chat message data and you must generate a JSON object that represents 5 flashcards. 
+                You have been given group chat message data and you must generate a JSON array that represents 5 flashcards. 
                 
                 This is the JSON structure for the flashcards:
                 
@@ -24,14 +24,30 @@ class ChatCompletion:
                         "question": "string",
                         "answer": "string"
                     },
-                    ...
+                    {
+                        "question": "string",
+                        "answer": "string"
+                    },
+                    {
+                        "question": "string",
+                        "answer": "string"
+                    },
+                    {
+                        "question": "string",
+                        "answer": "string"
+                    },
+                    {
+                        "question": "string",
+                        "answer": "string"
+                    }
                 ]
+                
+                Return ONLY the JSON array, no additional text or formatting.
                 """
                 },
 
-                {"role": "user", "content": f"""Please generate a flashcard JSON given this group chat data: {content}"""}
-            ],
-            response_format={"type": "json_object"}
+                {"role": "user", "content": f"""Please generate a flashcard JSON array given this group chat data: {content}"""}
+            ]
         )
         return response.choices[0].message.content
     
@@ -42,7 +58,7 @@ class ChatCompletion:
                 {"role": "system", "content": 
                 
                 """
-                You have been given group chat message data and you must generate a JSON object that represents 5 quiz questions. 
+                You have been given group chat message data and you must generate a JSON array that represents 5 quiz questions. 
                 
                 This is the JSON structure for the quiz questions:
                 
@@ -53,7 +69,7 @@ class ChatCompletion:
                         "answer2": "string",
                         "answer3": "string",
                         "answer4": "string",
-                        "correctAnswer": "number"
+                        "correctAnswer": 1
                     },
                     {
                         "question": "string",
@@ -61,16 +77,40 @@ class ChatCompletion:
                         "answer2": "string",
                         "answer3": "string",
                         "answer4": "string",
-                        "correctAnswer": "number"
+                        "correctAnswer": 2
                     },
-                ...
+                    {
+                        "question": "string",
+                        "answer1": "string",
+                        "answer2": "string",
+                        "answer3": "string",
+                        "answer4": "string",
+                        "correctAnswer": 3
+                    },
+                    {
+                        "question": "string",
+                        "answer1": "string",
+                        "answer2": "string",
+                        "answer3": "string",
+                        "answer4": "string",
+                        "correctAnswer": 4
+                    },
+                    {
+                        "question": "string",
+                        "answer1": "string",
+                        "answer2": "string",
+                        "answer3": "string",
+                        "answer4": "string",
+                        "correctAnswer": 1
+                    }
                 ]
+                
+                Return ONLY the JSON array, no additional text or formatting.
                 """
                 },
 
-                {"role": "user", "content": f"""Please generate a quiz json given this group chat data:  {content}"""}
-            ],
-            response_format={"type": "json_object"}
+                {"role": "user", "content": f"""Please generate a quiz JSON array given this group chat data: {content}"""}
+            ]
         )
         return response.choices[0].message.content
 
